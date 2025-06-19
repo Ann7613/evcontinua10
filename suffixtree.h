@@ -1,25 +1,30 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <unordered_map>
 using namespace std;
+
+const int OFFSET = 32;
+const int E = 95;
 
 struct Nodo {
     char valor;
-    unordered_map<char, Nodo*> hijos;
+    Nodo* hijos[E];
     bool esHoja;
     int posicion;
 
-    Nodo(char v = '\0') : valor(v), esHoja(false), posicion(-1) {}
+    Nodo(char v = '\0') : valor(v), esHoja(false), posicion(-1) {
+        for (int i = 0; i < E; ++i)
+            hijos[i] = nullptr;
+    }
 };
 
 void bajarPorRamas(Nodo* nodo, vector<int>& posiciones) {
-    if (!nodo) return;
-    if (nodo->esHoja) {
+    if (nodo == nullptr) return;
+    if (nodo->esHoja)
         posiciones.push_back(nodo->posicion);
-    }
-    for (auto& par : nodo->hijos) {
-        bajarPorRamas(par.second, posiciones);
+    for (int i = 0; i < E; ++i) {
+        if (nodo->hijos[i])
+            bajarPorRamas(nodo->hijos[i], posiciones);
     }
 }
 
@@ -30,10 +35,11 @@ Nodo* construirArbol(const string& texto) {
         Nodo* nodo = raiz;
         for (int j = i; j < n; j++) {
             char c = texto[j];
-            if (nodo->hijos.find(c) == nodo->hijos.end()) {
-                nodo->hijos[c] = new Nodo(c);
-            }
-            nodo = nodo->hijos[c];
+            int index = c - OFFSET;
+            if (index < 0 || index >= E) break;
+            if (nodo->hijos[index] == nullptr)
+                nodo->hijos[index] = new Nodo(c);
+            nodo = nodo->hijos[index];
         }
         nodo->esHoja = true;
         nodo->posicion = i;
@@ -44,12 +50,14 @@ Nodo* construirArbol(const string& texto) {
 vector<int> buscarPatron(Nodo* raiz, const string& patron) {
     Nodo* nodo = raiz;
     for (char c : patron) {
-        if (nodo->hijos.find(c) == nodo->hijos.end())
+        int index = c - OFFSET;
+        if (index < 0 || index >= E || nodo->hijos[index] == nullptr)
             return {};
-        nodo = nodo->hijos[c];
+        nodo = nodo->hijos[index];
     }
     vector<int> posiciones;
     bajarPorRamas(nodo, posiciones);
     return posiciones;
 }
+
 
