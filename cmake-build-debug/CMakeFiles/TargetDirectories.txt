@@ -1,0 +1,3 @@
+D:/ANEL/UNIVERSIDAD/4TO CICLO/AED/TrainStringMatching/TrainStringMatching/cmake-build-debug/CMakeFiles/TrainStringMatching.dir
+D:/ANEL/UNIVERSIDAD/4TO CICLO/AED/TrainStringMatching/TrainStringMatching/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/ANEL/UNIVERSIDAD/4TO CICLO/AED/TrainStringMatching/TrainStringMatching/cmake-build-debug/CMakeFiles/rebuild_cache.dir

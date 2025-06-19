@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.27"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "TrainStringMatching",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "TrainStringMatching::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TrainStringMatching-Debug-fd8b4ca2b587875f1e31.json",
+					"name" : "TrainStringMatching",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/ANEL/UNIVERSIDAD/4TO CICLO/AED/TrainStringMatching/TrainStringMatching/cmake-build-debug",
+		"source" : "D:/ANEL/UNIVERSIDAD/4TO CICLO/AED/TrainStringMatching/TrainStringMatching"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

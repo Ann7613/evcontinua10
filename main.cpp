@@ -1,74 +1,87 @@
 #include <iostream>
+#include <vector>
 #include <chrono>
 #include <ctime>
-#include <unistd.h>
 #include "smatching.h"
+#include "suffixtree.h"
 
 using namespace std;
 
 const string alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789   ";
 
-string generarTexto(int N){    
+string generarTexto(size_t N){
     string resultado = "";
     for (size_t i = 0; i < N; i++)
         resultado += alfabeto[rand() %  alfabeto.size()];
     return resultado;
 }
 
-void testInocente(string Texto, string Patron)
-{    
+vector<int> testInocente(string Texto, string Patron)
+{
     auto start = std::chrono::steady_clock::now();
-
-    //execute the algorithm
-    //TODO
-
+    vector<int> result = execInocente(Texto, Patron);
     auto end = std::chrono::steady_clock::now();
+
     //show the elapsed time
-    cout << "Elapsed time in milliseconds: "
-        << chrono::duration_cast<chrono::microseconds>(end - start).count()
-        << " ms" << endl;
+    cout << "Inocente: elapsed time in milliseconds: "
+         << chrono::duration_cast<chrono::microseconds>(end - start).count()
+         << " ms" << endl;
+    return result;
 }
 
-void testBoyerMoore(string Texto, string Patron)
-{    
+vector<int> testBoyerMoore(string Texto, string Patron)
+{
     auto start = std::chrono::steady_clock::now();
-
-    //execute the algorithm
-    //TODO
-
+    vector<int> result = execBoyerMoore(Texto, Patron);
     auto end = std::chrono::steady_clock::now();
     //show the elapsed time
-    cout << "Elapsed time in milliseconds: "
-        << chrono::duration_cast<chrono::microseconds>(end - start).count()
-        << " ms" << endl;
+    cout << "BoyerMoore: elapsed time in milliseconds: "
+         << chrono::duration_cast<chrono::microseconds>(end - start).count()
+         << " ms" << endl;
+    return result;
 }
 
-void testSuffixTree(string Texto, string Patron)
-{    
+vector<int> testSuffixTree(string Texto, string Patron)
+{
+    Nodo* raiz = construirArbol(Texto);
     auto start = std::chrono::steady_clock::now();
-
-    //execute the algorithm
-    //TODO
-
+    vector<int> result = buscarPatron(raiz, Patron);
     auto end = std::chrono::steady_clock::now();
+
     //show the elapsed time
-    cout << "Elapsed time in milliseconds: "
-        << chrono::duration_cast<chrono::microseconds>(end - start).count()
-        << " ms" << endl;
+    cout << "SuffixTree: elapsed time in milliseconds: "
+         << chrono::duration_cast<chrono::microseconds>(end - start).count()
+         << " ms" << endl;
+    return result;
 }
 
-
+void verificarResultado(vector<int> result1, vector<int> result2)
+{
+    if(result1.size() != result2.size())
+        cerr <<"Error!! el resultado no es el mismo\n";
+    for(int i=0;i<result1.size();i++)
+        if(result1[i] != result2[i])
+            cerr <<"Error!! el resultado no es el mismo\n";
+}
 int main()
-{    
-    srand(time(NULL));    
-    size_t N = 100;
-    int m = 10;
-    string Texto = generarTexto(N);
-    string Patron = generarTexto(m);    
-    
-    testInocente(Texto, Patron);
-    testBoyerMoore(Texto, Patron);
-    testSuffixTree(Texto, Patron);
+{
+    srand(time(NULL));
+    vector<size_t> Ns = {10, 100,1000};//, 10000, 100000, 1000000, 10000000, 100000000};
+    int m = 10; // tamaño del patrón
+
+    for (size_t N : Ns) {
+        cout << "===== N = " << N << " =====" << endl;
+        string Texto = generarTexto(N);
+        string Patron = generarTexto(m);
+
+        vector<int> result1 = testInocente(Texto, Patron);
+        vector<int> result2 = testBoyerMoore(Texto, Patron);
+        //vector<int> result3 = testSuffixTree(Texto, Patron);
+
+        verificarResultado(result1, result2);
+        //verificarResultado(result1, result3);
+        cout << endl;
+    }
 
     return 0;
 }
