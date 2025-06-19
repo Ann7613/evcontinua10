@@ -24,3 +24,6 @@
 
 
 ## Gráfico
+
+![grafica](grafica.png)
+
